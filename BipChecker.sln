@@ -1,20 +1,30 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BipChecker", "BipChecker\BipChecker.csproj", "{7585B3DE-4391-4FEF-826E-9604D2A5454E}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30128.74
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BipChecker", "BipChecker\BipChecker.csproj", "{8E0989C5-D603-441F-AC61-83F9B3C9D90E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7585B3DE-4391-4FEF-826E-9604D2A5454E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7585B3DE-4391-4FEF-826E-9604D2A5454E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7585B3DE-4391-4FEF-826E-9604D2A5454E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7585B3DE-4391-4FEF-826E-9604D2A5454E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E0989C5-D603-441F-AC61-83F9B3C9D90E}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{8E0989C5-D603-441F-AC61-83F9B3C9D90E}.Debug|Any CPU.Build.0 = Debug|x64
+		{8E0989C5-D603-441F-AC61-83F9B3C9D90E}.Debug|x64.ActiveCfg = Debug|x64
+		{8E0989C5-D603-441F-AC61-83F9B3C9D90E}.Debug|x64.Build.0 = Debug|x64
+		{8E0989C5-D603-441F-AC61-83F9B3C9D90E}.Release|Any CPU.ActiveCfg = Release|x64
+		{8E0989C5-D603-441F-AC61-83F9B3C9D90E}.Release|x64.ActiveCfg = Release|x64
+		{8E0989C5-D603-441F-AC61-83F9B3C9D90E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CE543D3-0348-4FD0-844E-1C7B7413B097}
 	EndGlobalSection
 EndGlobal

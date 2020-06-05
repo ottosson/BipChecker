@@ -1,0 +1,86 @@
+﻿<Window x:Class="BipChecker.Views.BipCheckerListView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:utils="clr-namespace:BipChecker.Utils"
+        mc:Ignorable="d"
+        SizeToContent="Width"  
+        Width="Auto"
+        Title="{Binding Title}" Height="450" WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ListView Grid.Row="1" Grid.Column="1" Name="ParametersList"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  ScrollViewer.CanContentScroll="True"
+                  IsSynchronizedWithCurrentItem="True"
+                  utils:GridViewSort.AutoSort="True"
+                  ItemsSource="{Binding LicenseListRows}">
+
+            <ListView.Resources>
+                <Style TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                </Style>
+            </ListView.Resources>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Border CornerRadius="1" SnapsToDevicePixels="True"
+                                        BorderThickness="0" 
+                                        BorderBrush="{TemplateBinding BorderBrush}" 
+                                        Background="{TemplateBinding Background}">
+                                    <Border Name="InnerBorder" CornerRadius="1" BorderThickness="0">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition MaxHeight="11" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Rectangle Name="UpperHighlight" Visibility="Collapsed" Fill="#75FFFFFF" />
+                                            <GridViewRowPresenter Grid.RowSpan="2"
+                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                        </Grid>
+                                    </Border>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="Background" Value="DodgerBlue"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="BuiltInParameter" Width="Auto" DisplayMemberBinding="{Binding Enum}" utils:GridViewSort.PropertyName="Enum" />
+                    <GridViewColumn Header="ParameterName" Width="Auto" DisplayMemberBinding="{Binding Name}" utils:GridViewSort.PropertyName="Name" />
+                    <GridViewColumn Header="Type" Width="Auto" DisplayMemberBinding="{Binding Type}" utils:GridViewSort.PropertyName="Type" />
+                    <GridViewColumn Header="Read/Write" Width="Auto" DisplayMemberBinding="{Binding ReadWrite}" utils:GridViewSort.PropertyName="ReadWrite" />
+                    <GridViewColumn Header="String Value" Width="Auto" DisplayMemberBinding="{Binding ValueString}" utils:GridViewSort.PropertyName="ValueString" />
+                    <GridViewColumn Header="Database Value" Width="Auto" DisplayMemberBinding="{Binding Value}" utils:GridViewSort.PropertyName="Value" />
+                    <GridViewColumn Header="Parameter Group" Width="Auto" DisplayMemberBinding="{Binding ParameterGroup}" utils:GridViewSort.PropertyName="ParameterGroup" />
+                    <GridViewColumn Header="Group Name" Width="Auto" DisplayMemberBinding="{Binding GroupName}" utils:GridViewSort.PropertyName="GroupName" />
+                    <GridViewColumn Header="Shared" Width="Auto" DisplayMemberBinding="{Binding Shared}" utils:GridViewSort.PropertyName="Shared" />
+                    <GridViewColumn Header="GUID" Width="Auto" DisplayMemberBinding="{Binding Guid}" utils:GridViewSort.PropertyName="Guid" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button Height="0" IsCancel="True" IsTabStop="False" />
+    </Grid>
+</Window>

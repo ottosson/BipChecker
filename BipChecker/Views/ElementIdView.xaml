@@ -1,0 +1,56 @@
+﻿<Window x:Class="BipChecker.Views.ElementIdView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:local="clr-namespace:BipChecker.Views"
+        mc:Ignorable="d"
+        x:Name="ElementIdWindow"
+        FocusManager.FocusedElement="{Binding ElementName=IdInput}"
+        SizeToContent="WidthAndHeight"  
+        Height="Auto" 
+        Width="Auto"
+        Title="Get element by ID" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="ToolWindow">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="PickElement" Content="Pick element" Grid.Row="0" Grid.Column="0" Height="25" Padding="5,0" Margin="0,0,5,0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <cal:ActionMessage MethodName="PickElementClick">
+                        <cal:Parameter Value="{Binding ElementName=ElementIdWindow}" />
+                    </cal:ActionMessage>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+        <TextBox x:Name="IdInput" Grid.Row="0" Grid.Column="1" Height="25" TextAlignment="Center" VerticalContentAlignment="Center" MaxLength="10" Width="200" Text="{Binding ElementId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Grid.ColumnSpan="2"  Margin="0,5,0,0">
+            <Button x:Name="Ok" Content="Ok" Height="25" Width="60" Padding="5,0" IsDefault="True" IsEnabled="{Binding OkEnabled}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="OkClick">
+                            <cal:Parameter Value="{Binding ElementName=ElementIdWindow}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button x:Name="Cancel" Content="Cancel" Height="25" Width="60" Margin="5,0,0,0" Padding="5,0" IsCancel="True">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="CancelClick" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
