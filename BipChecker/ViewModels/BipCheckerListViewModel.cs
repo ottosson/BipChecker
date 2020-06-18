@@ -8,7 +8,7 @@ namespace BipChecker.ViewModels
     public class BipCheckerListViewModel : Screen
     {
         // SortableBindingList<ParameterData>
-        private BindableCollection<ParameterData> _licenseListRows;
+        private BindableCollection<ParameterData> _bipList;
         private Element _element;
 
         public BipCheckerListViewModel(Element element, string description, List<ParameterData> data)
@@ -16,21 +16,21 @@ namespace BipChecker.ViewModels
             _element = element;
             Title = $"Built-in Parameters for {element.GetType()} ({description})";
 
-            LicenseListRows = new BindableCollection<ParameterData>();
+            BIPList = new BindableCollection<ParameterData>();
 
             foreach (var item in data)
             {
-                LicenseListRows.Add(item);
+                BIPList.Add(item);
             }
         }
 
-        public BindableCollection<ParameterData> LicenseListRows
+        public BindableCollection<ParameterData> BIPList
         {
-            get { return _licenseListRows; }
+            get { return _bipList; }
             set
             {
-                _licenseListRows = value;
-                NotifyOfPropertyChange(() => LicenseListRows);
+                _bipList = value;
+                NotifyOfPropertyChange(() => BIPList);
             }
         }
 
@@ -43,9 +43,7 @@ namespace BipChecker.ViewModels
             {
                 _title = value;
                 NotifyOfPropertyChange(() => Title);
-
             }
         }
-
     }
 }

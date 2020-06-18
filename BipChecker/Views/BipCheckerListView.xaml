@@ -23,7 +23,7 @@
                   ScrollViewer.CanContentScroll="True"
                   IsSynchronizedWithCurrentItem="True"
                   utils:GridViewSort.AutoSort="True"
-                  ItemsSource="{Binding LicenseListRows}">
+                  ItemsSource="{Binding BIPList}">
 
             <ListView.Resources>
                 <Style TargetType="{x:Type GridViewColumnHeader}">
