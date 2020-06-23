@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -116,8 +115,6 @@ namespace BipChecker
 
                 if (inst.Symbol != null)
                 {
-                    var symbol_name = Util.ElementDescription(inst.Symbol, true);
-                    var family_name = Util.ElementDescription(inst.Symbol.Family, true);
                     var msg = string.Format(_type_prompt, "is a family instance");
 
                     if (!Util.QuestionMsg(msg))
@@ -161,23 +158,9 @@ namespace BipChecker
             }
 
             // Retrieve parameter data
-
+            var unique = new HashSet<string>();
             var data = new List<ParameterData>();
-
             var set = element.Parameters;
-            bool containedInCollection;
-
-            /* 
-             * !!! This implemention does not work properly
-             * if enum has the same integer value
-             * For example, BuiltInParameter.All_MODEL_COST and
-             * BuiltInParameter.DOOR_COST have -1001205 integer value
-             * 
-               var bips = Enum.GetValues(typeof(BuiltInParameter));
-               int n = bips.Length;
-             * 
-             */
-
             var bipNames = Enum.GetNames(typeof(BuiltInParameter));
 
             foreach (var bipName in bipNames)
@@ -187,40 +170,40 @@ namespace BipChecker
                     continue;
                 }
 
-                try
-                {
-                    var parameter = element.get_Parameter(bip);
+                var parameter = element.get_Parameter(bip);
 
-                    if (parameter != null)
+                if (parameter != null)
+                {
+                    var valueString = (parameter.StorageType == StorageType.ElementId) ? Util.GetParameterValue2(parameter, doc) : parameter.AsValueString();
+                    var containedInCollection = ContainedInCollection(parameter, set);
+                    var parameterData = new ParameterData(bip, parameter, valueString, containedInCollection, bipName);
+                    var identifyer = $"{parameterData.Enum}{parameterData.Name}";
+
+                    if (!unique.Contains(identifyer))
                     {
-                        string valueString = (StorageType.ElementId == parameter.StorageType) ? Util.GetParameterValue2(parameter, doc) : parameter.AsValueString();
-
-                        containedInCollection = ContainedInCollection(parameter, set);
-
-                        data.Add(new ParameterData(bip, parameter, valueString, containedInCollection, bipName));
+                        data.Add(parameterData);
+                        unique.Add(identifyer);
                     }
-                }
-                catch (Exception ex)
-                {
-                    Debug.Print("Exception retrieving built-in parameter {0}: {1}", bip, ex);
                 }
             }
 
             // Retrieve parameters from Element.Parameters collection
             foreach (Parameter parameter in element.Parameters)
             {
-                var valueString = (StorageType.ElementId == parameter.StorageType) ? Util.GetParameterValue2(parameter, doc) : parameter.AsValueString();
-                var parameterData = new ParameterData((parameter.Definition as InternalDefinition).BuiltInParameter, parameter, valueString, true, null);
+                var valueString = (parameter.StorageType == StorageType.ElementId) ? Util.GetParameterValue2(parameter, doc) : parameter.AsValueString();
+                var bip = (parameter.Definition as InternalDefinition).BuiltInParameter;
+                var parameterData = new ParameterData(bip, parameter, valueString, true, null);
+                var identifyer = $"{parameterData.Enum}{parameterData.Name}";
 
-                if (!data.Contains(parameterData))
+                if (!unique.Contains(identifyer))
                 {
                     data.Add(parameterData);
+                    unique.Add(identifyer);
                 }
             }
-
+            
             // Display form
             var description = Util.ElementDescription(element, true) + (isSymbol ? " Type" : " Instance");
-
             var formViewModel = new BipCheckerListViewModel(element, description, data);
             var form = new BipCheckerListView { DataContext = formViewModel };
 
